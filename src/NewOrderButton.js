@@ -16,7 +16,8 @@ function NewOrderButton() {
       const volume = prompt('Please input volume');
       const pricing = prompt('Please input pricing');
       
-      if (newCode!=null && buysell!=null &&  volume!=null && pricing!=null) {
+      if (newCode!=null && newCode!='' && buysell!=null && buysell !=''
+        && volume!=null && volume!='' && pricing!=null && pricing!='') {
         Frame().push({
           code: newCode.toUpperCase(),
           buysell: buysell.toUpperCase()[ 0 ],
@@ -27,6 +28,8 @@ function NewOrderButton() {
         })
         alert('New record saved. Please re-select a Security code.')
       }
+      else
+        alert('Please input non-empty values and try again.')
       sync();
     }
   
