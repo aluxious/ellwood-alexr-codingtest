@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('load security code dropdown', () => {
+  render(<App />)
+  const secText = screen.getByTestId(/wrapper/);
+  expect(secText).toBeInTheDocument();
 });

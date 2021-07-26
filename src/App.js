@@ -4,14 +4,15 @@ import { useState } from "react"
 import 'react-dropdown/style.css';
 import ebconfig from './ebconfig';
 
-
 function App() {
   return (
-    <div className="App" style={{ display: "flex", justifyContent: "center" }}>
-      <EasybaseProvider ebconfig={ebconfig}>
-        <PricingQCP/>
-        <NewOrderButton />
-      </EasybaseProvider>      
+    <div id="wrapper" data-testid="wrapper">
+      <div className="App" style={{ display: "flex", justifyContent: "center" }}>      
+        <EasybaseProvider ebconfig={ebconfig}>
+          <PricingQCP/>
+          <NewOrderButton />
+        </EasybaseProvider>      
+      </div>
     </div>
   );
 }
@@ -22,7 +23,7 @@ const noteRootStyle = {
   borderRadius: 9,
   margin: 20,
   backgroundColor: "#efefef",
-  padding: 6,
+  padding: 6
 }
 
 const noteRootStyle2 = {
@@ -30,7 +31,7 @@ const noteRootStyle2 = {
   borderRadius: 9,
   position: "absolute",
   top: 150,
-  left: 0,
+  left: 100,
   margin: 20,
   backgroundColor: "#cfcfcf",
   padding: 6
@@ -38,13 +39,13 @@ const noteRootStyle2 = {
 
 const ddStyle = {
   position: "absolute",
-  left: 180,
+  left: 280,
   top: 24,
   fontSize: 21
 }  
 const titleStyle = {
   position: "absolute",
-  left: 0,
+  left: 100,
   top: 0,
   fontSize: 21
 }  
@@ -62,20 +63,21 @@ function PricingQCP() {
       return db('ORDERBOOK').return()   
   }, [scode]);
 
-
   const buys = frame.filter(c=>c.buysell=='B')
-  const sells = frame.filter(c=>c.buysell=='S')
+  const sells = frame.sort((a,b)=>a.price-b.price).filter(c=>c.buysell=='S')
 
   let op_price = 0
   let op_vol = 0
-  buys.map(b=>
-    sells.map(s=>{
-      if (b.price<=s.price && b.price>op_price){
-        op_price = b.price
-        op_vol = b.volume
-      }
-    })
-    )
+
+  if (scode!='') {
+    sells.map(s=>
+      buys.map(b=>{
+        if (s.price<=b.price && b.price>op_price){
+          op_price = b.price
+          op_vol = b.volume
+        }
+      }))
+  }
 
   if (uniqueTags.length==0)
     uniqueTags.push('');
@@ -85,6 +87,8 @@ function PricingQCP() {
           uniqueTags.push(ex.code)
       }
   });
+
+  uniqueTags.sort()
   
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -95,8 +99,8 @@ function PricingQCP() {
       )}
       </select>
       <p>
-        <div style={noteRootStyle}><p><h3>Buy</h3></p></div>
-        <table  style={noteRootStyle}>
+        <div><p><h3>Buy</h3></p></div>
+        <table style={noteRootStyle}>
           <th>Volume</th>
           <th>Price</th>
           {frame.filter(c=>c.buysell=='B').map(e =>         
@@ -108,7 +112,7 @@ function PricingQCP() {
         </table>
       </p>
       <p>
-        <div style={noteRootStyle}><p><h3>Sell</h3></p></div>
+        <div><p><h3>Sell</h3></p></div>
         <table  style={noteRootStyle}>
           <th>Volume</th>
           <th>Price</th>
@@ -121,6 +125,7 @@ function PricingQCP() {
         </table>
       </p>
       <p style={noteRootStyle2}>
+        <div>Security Code=&nbsp;{scode}</div>
         <div>Opening Price=&nbsp;{op_price}</div>
         <div>Max. Volume=&nbsp;{op_vol}</div>
       </p>      
@@ -133,7 +138,7 @@ function NewOrderButton() {
 
   const buttonStyle = {
     position: "absolute",
-    left: 0,
+    left: 100,
     top: 100,
     fontSize: 21
   }
@@ -144,15 +149,17 @@ function NewOrderButton() {
     const volume = prompt("Please input volume");
     const pricing = prompt("Please input pricing");
     
-    Frame().push({
-      code: newCode.toUpperCase(),
-      buysell: buysell.toUpperCase()[0],
-      volume: volume,
-      price: pricing,
-      createdate: new Date().toISOString(),
-      createtime: new Date().toTimeString(),
-    })
-    
+    if (newCode!=null && buysell!=null &&  volume!=null && pricing!=null) {
+      Frame().push({
+        code: newCode.toUpperCase(),
+        buysell: buysell.toUpperCase()[0],
+        volume: volume,
+        price: pricing,
+        createdate: new Date().toISOString(),
+        createtime: new Date().toTimeString(),
+      })
+      alert('New record saved. Please re-select a Security code.')
+    }
     sync();
   }
 

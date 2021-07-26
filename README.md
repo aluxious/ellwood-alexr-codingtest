@@ -23,6 +23,7 @@ Columns:
 * At inital load, all data will be displayed for all security codes.
 * Choose a security code from the dropdown on the left. The corresponding pricing values will be displayed, as well as the Max volume for a given (calculated) open price.
 * Can add new pricing data using the new "Add new order" button. Input singular values for Code, Buysell (B or S),Volume,Price
+* Run `npm test` to run unit tests
 
 ### Technical notes:
 * Program entry point: ./src/App.js
