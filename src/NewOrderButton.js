@@ -4,22 +4,22 @@ function NewOrderButton() {
     const { Frame, sync } = useEasybase();
   
     const buttonStyle = {
-      position: "absolute",
+      position: 'absolute',
       left: 100,
       top: 100,
       fontSize: 21
     }
   
     const handleClick = () => {
-      const newCode = prompt("Please enter your security code");
-      const buysell = prompt("Please input either buy/sell (b/s)");
-      const volume = prompt("Please input volume");
-      const pricing = prompt("Please input pricing");
+      const newCode = prompt('Please enter your security code');
+      const buysell = prompt('Please input either buy/sell (b/s)');
+      const volume = prompt('Please input volume');
+      const pricing = prompt('Please input pricing');
       
       if (newCode!=null && buysell!=null &&  volume!=null && pricing!=null) {
         Frame().push({
           code: newCode.toUpperCase(),
-          buysell: buysell.toUpperCase()[0],
+          buysell: buysell.toUpperCase()[ 0 ],
           volume: volume,
           price: pricing,
           createdate: new Date().toISOString(),
@@ -30,7 +30,7 @@ function NewOrderButton() {
       sync();
     }
   
-    return <button style={buttonStyle} onClick={handleClick}>📓 Add New Order 📓</button>
+    return <button style={ buttonStyle } onClick={ handleClick }>📓 Add New Order 📓</button>
   }
 
-  export default NewOrderButton;
+export default NewOrderButton;
