@@ -18,7 +18,7 @@ const tradeVolumeStyle = {
   borderRadius: 9,
   position: 'absolute',
   top: 50,
-  left: 100,
+  left: 10,
   width:200,
   margin: 20,
   backgroundColor: '#cfcfcf',
@@ -27,13 +27,13 @@ const tradeVolumeStyle = {
 
 const ddStyle = {
   position: 'absolute',
-  left: 280,
+  left: 180,
   top: 24,
   fontSize: 21
 }  
 const titleStyle = {
   position: 'absolute',
-  left: 100,
+  left: 10,
   top: 4,
   fontSize: 21
 }  

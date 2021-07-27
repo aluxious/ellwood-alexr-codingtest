@@ -5,8 +5,8 @@ function NewOrderButton() {
   
     const buttonStyle = {
       position: 'absolute',
-      left: 100,
-      top: 180,
+      left: 30,
+      top: 150,
       fontSize: 21
     }
   
